@@ -1,6 +1,8 @@
 #!/bin/bash
+##bash code to get contents of files stored in different locations on you systems
+##3useful for compiling all coordinates data in computational chemistry supplementary information for research papers
 ## first arrange a file 'coord-list.txt' in the following format
-## name of species /path/to/file
+## name-of-species(do not use space character in name) /path/to/file
 p=`pwd`   ##current working directory
 for i in `seq 1 16`;    ##the number 16 is to be set manually, if the length of coord-list.txt is 10, set `seq 1 10`  
 do
