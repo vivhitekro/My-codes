@@ -1,0 +1,33 @@
+#!/bin/bash
+
+echo "Enter the number of atoms: "
+read num_atoms
+num_out_file=`ls *.out | wc -l`
+if [ "$num_out_file" -gt 1 ]
+then
+        echo "More than one .out file found in the directory, please provide the .out file explicitly below: "
+        ls *.out
+        read file
+else
+        file=`ls *.out`
+fi
+
+`grep -n "Coordinates (Cartesian)" $file | cut -d':' -f1 > line_nums.tmp`
+num_cyc=`cat line_nums.tmp | wc -l`
+for i in `seq 2 $num_cyc`
+do
+        start_1=`head -$i line_nums.tmp | tail -1`
+        start_l=$((start_1+6))
+        finish=$((start_l+num_atoms-1))
+        echo $start_l,$finish
+        energy_line=$((start_1-11))
+        energy=`sed "${energy_line}q;d" $file`
+        echo $energy
+        echo $num_atoms >> traj.xyz
+        echo $energy >> traj.xyz
+        #head -$finish $file | tail -$num_atoms >> traj.xyz
+        #echo $ghost >> traj.xyz
+        `head -$finish $file | tail -$num_atoms | tr -s ' ' | cut -d' ' -f3,7-9 >> traj.xyz`     #to generate only standard xyz file in Angstrom units
+        #sed -n ${start_l},${finish}p $2 >> traj.xyz
+        wait
+done
