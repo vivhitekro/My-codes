@@ -1,2 +1,2 @@
 # My-codes
-Contains some simple codes I have written for different purposes for use in Comoutational Chemistry.
+Contains some simple codes I have written for different purposes for use in Computational Chemistry.
