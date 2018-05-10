@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "usage sh gen_ir_spec.sh wavenumber_1 wavenumber_2 where wavenumber_1 and wavenumber_2 are the limits on the x axis where you want to plot"
-b2t   #this is specific for BOpt set-up, you just need "coord" #file, this line can be commented out if you are using only #Turbomole
+b2t
 wait
 vibration -spectrum 
 file=${PWD##*/}
@@ -45,4 +45,5 @@ sed -n 35,10000000p vibspec.gnu >> $file.gnu
 gnuplot < $file.gnu
 wait
 mv vibspec.dat $file.dat
-## $file.dat can be plotted using excel
+# remove the "i" from the output file to make it cleaner for use in excel
+sed -i 's/i//g' $file.dat   
